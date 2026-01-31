@@ -98,3 +98,13 @@ header p {
   height: 40px;
   font-family: inherit;
 }
+
+#input-area button {
+  background-color: #0056b3;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0 15px;
+  font-weight: bold;
+  cursor: pointer;
+}

@@ -87,7 +87,7 @@ header p {
   border-top: 1px solid #333;
 }
 
-#input-area text-area {
+#input-area textarea {
   flex: 1;
   background-color: #121212;
   border: 1px solid #444;

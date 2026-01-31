@@ -1,10 +1,11 @@
 // --- CONFIGURATION ---
+// In Vite, variables must start with VITE_ to be accessible in the frontend
 const OPENROUTER_API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY;
 
 // --- HELPER FUNCTIONS ---
 const scrollToBottom = () => {
   const chatDisplay = document.getElementById('chat-display');
-  // requestAnimationFrame ensures the scroll happens after the browser renders the new message
+  // requestAnimationFrame ensures scrolling happens after the browser renders the new HTML
   requestAnimationFrame(() => {
     chatDisplay.scrollTop = chatDisplay.scrollHeight;
   });
@@ -17,38 +18,37 @@ const sendMessage = async () => {
   
   if (messageText === "") return;
 
-  // 1. Add User Bubble
+  // 1. Add User Message
   const userDiv = document.createElement('div');
   userDiv.className = 'message user';
   userDiv.textContent = messageText;
   chatDisplay.appendChild(userDiv);
   
   chatInput.value = "";
-  scrollToBottom(); // Scroll after user message
+  scrollToBottom();
   
-  // 2. Add AI "Thinking" Bubble
+  // 2. Add AI "Thinking" Bubble with Animation
   const aiDiv = document.createElement('div');
-  aiDiv.className = 'message ai';
-  aiDiv.textContent = "...";
+  aiDiv.className = 'message ai typing';
+  aiDiv.innerHTML = '<span>.</span><span>.</span><span>.</span>';
   chatDisplay.appendChild(aiDiv);
-  scrollToBottom(); // Scroll for the thinking bubble
+  scrollToBottom();
 
   try {
     const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${OPENROUTER_API_KEY.trim()}`,
+        "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
         "Content-Type": "application/json",
-        "HTTP-Referer": window.location.href, // Good practice for OpenRouter
+        "HTTP-Referer": window.location.href, 
         "X-Title": "City Hope IntelliSense"
       },
       body: JSON.stringify({
-        // Using a stable ID to avoid "No endpoints found" errors
-        "model": "tngtech/deepseek-r1t2-chimera:free", 
+        "model": "google/gemini-2.0-flash-exp:free", 
         "messages": [
           { 
             "role": "system", 
-            "content": "You are City Hope IntelliSense, a warm and supportive friend for church members in Legazpi. Be encouraging and helpful." 
+            "content": "You are City Hope IntelliSense, a warm and supportive friend for church members in Legazpi. Be encouraging, helpful, and use a friendly tone." 
           },
           { "role": "user", "content": messageText }
         ]
@@ -58,22 +58,23 @@ const sendMessage = async () => {
     const data = await response.json();
 
     if (!response.ok) {
-      console.error("OpenRouter Error:", data);
-      aiDiv.textContent = `Error: ${data.error?.message || "Unauthorized"}`;
+      aiDiv.classList.remove('typing');
+      aiDiv.textContent = "I'm having a bit of trouble connecting. Please try again later!";
       return;
     }
 
-    // This removes everything inside {{ }} including the brackets
-    const cleanMessage = data.choices[0].message.content.replace(/\{\{.*?\}\}/gs, "").trim();
-    aiDiv.textContent = cleanMessage;
+    // 3. Clean and Display Content
+    const rawContent = data.choices[0].message.content;
+    // This regex removes {{ reasoning tags }} if you switch to a reasoning model
+    const cleanContent = rawContent.replace(/\{\{.*?\}\}/gs, "").trim();
 
-    // 3. Replace "..." with real content and scroll again
-    aiDiv.textContent = data.choices[0].message.content;
+    aiDiv.classList.remove('typing');
+    aiDiv.textContent = cleanContent;
     scrollToBottom();
 
   } catch (error) {
-    console.error("Fetch Error:", error);
-    aiDiv.textContent = "I'm having trouble connecting. Check your internet or API key.";
+    aiDiv.classList.remove('typing');
+    aiDiv.textContent = "Connection lost. Is your internet working?";
     scrollToBottom();
   }
 };
@@ -86,4 +87,4 @@ document.getElementById('chat-input').addEventListener('keypress', (e) => {
     e.preventDefault();
     sendMessage();
   }
-});
+}); 

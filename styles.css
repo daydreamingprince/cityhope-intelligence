@@ -16,3 +16,15 @@ body {
   align-items: center;
   min-height: 100vh;
 }
+
+.chat-container {
+  width: 95%;           /* This will leave a small gap on the sides of phones */
+  max-width: 400px;     /* This will prevent it from getting too wide on laptops for now */
+  height: 90vh;         /* will leave a little space on top and bottom */
+  display: flex;
+  flex-direction: column;
+  background-color: #1e1e1e;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}

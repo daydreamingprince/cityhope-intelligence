@@ -108,3 +108,11 @@ header p {
   font-weight: bold;
   cursor: pointer;
 }
+
+footer {
+  padding: 10px 20px;
+  font-size: 0.7rem;
+  color: #666;
+  text-align: center;
+  background-color: #1e1e1e;
+}

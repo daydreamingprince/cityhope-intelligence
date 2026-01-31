@@ -1,34 +1,84 @@
-// Here we find the elements on the page and we give them nicknames
-const sendButton = document.querySelector('#input-area button');
-const chatInput = document.querySelector('#input-area textarea');
-const chatDisplay = document.querySelector('#chat-display');
+// CONFIGURATION
+const OPENROUTER_API_KEY = "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";
 
-const sendMessage = () => {
-  const messageText = chatInput.value.trim(); // grab the text and remove the extra spaces
+// DOM ELEMENTS
+const chatDisplay = document.getElementById('chat-display');
+const chatInput = document.getElementById('chat-input');
+const sendButton = document.getElementById('send-button');
 
-  // validation to make sure user does not send empty messages
-  if (message === "") return;
+// THE LOGIC
+const sendMessage = async () => {
+  const messageText = chatInput.value.trim();
+  if (messageText === "") return;
 
-  // now we build the user bubble
-  const userMessage = document.createElement('div'); // creates a new <div>
-  userMessage.classList.add('message', 'user'); // here we gave it the class we styled in css
-  userMessage.textContent = messageText; // we put the text inside the div
-
-  // we display it and add it to the screen
+  // Create and display User message
+  const userMessage = document.createElement('div');
+  userMessage.classList.add('message', 'user');
+  userMessage.textContent = messageText;
   chatDisplay.appendChild(userMessage);
 
-  // then we do the cleanup (like clearing input and scrolling to the bottom)
+  // Clear input immediately for better UX
   chatInput.value = "";
-  chatDisplay.scrollTop = chatDisplay.scrollheight;
+  chatDisplay.scrollTop = chatDisplay.scrollHeight;
+
+  // Create "Thinking" bubble for AI
+  const aiMessage = document.createElement('div');
+  aiMessage.classList.add('message', 'ai');
+  aiMessage.textContent = "...";
+  chatDisplay.appendChild(aiMessage);
+
+  try {
+    // The API Fetch Request
+    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        "model": "google/gemini-2.0-flash-exp:free",
+        "messages": [
+          { 
+            "role": "system", 
+            "content": "You are City Hope IntelliSense, a supportive friend for church members in Legazpi. Be warm, insightful, and grounded." 
+          },
+          { "role": "user", "content": messageText }
+        ]
+      })
+    });
+
+    // Handle potential server errors
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error("API Error Detailed:", errorData);
+      aiMessage.textContent = "I'm having trouble thinking right now. Please check my connection.";
+      return;
+    }
+
+    const data = await response.json();
+    
+    // show the AI's actual response
+    if (data.choices && data.choices[0]) {
+      aiMessage.textContent = data.choices[0].message.content;
+    } else {
+      aiMessage.textContent = "I heard you, but I don't have an answer right now.";
+    }
+
+  } catch (error) {
+    console.error("Connection Error:", error);
+    aiMessage.textContent = "Connection lost. Please try again.";
+  }
+
+  // scroll to show the AI response
+  chatDisplay.scrollTop = chatDisplay.scrollHeight;
 };
 
-// here tell the button to listen for a click
+// EVENT LISTENERS
 sendButton.addEventListener('click', sendMessage);
 
-// we allow user to send messages using 'enter'
 chatInput.addEventListener('keypress', (e) => {
   if (e.key === 'Enter' && !e.shiftKey) {
-    e.preventDefault(); // this will prevent a new line from being added
+    e.preventDefault();
     sendMessage();
   }
-})
+});

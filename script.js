@@ -6,10 +6,11 @@ const chatDisplay = document.getElementById('chat-display');
 const chatInput = document.getElementById('chat-input');
 const sendButton = document.getElementById('send-button');
 
-// THE LOGIC
-const sendMessage = async () => {
-  const messageText = chatInput.value.trim();
-  if (messageText === "") return;
+const sendMessage = () => {
+  const messageText = chatInput.value.trim(); // grab the text and remove the extra spaces
+
+  // validation to make sure user does not send empty messages
+  if (message === "") return;
 
   // Create and display User message
   const userMessage = document.createElement('div');
@@ -19,61 +20,10 @@ const sendMessage = async () => {
 
   // Clear input immediately for better UX
   chatInput.value = "";
-  chatDisplay.scrollTop = chatDisplay.scrollHeight;
-
-  // Create "Thinking" bubble for AI
-  const aiMessage = document.createElement('div');
-  aiMessage.classList.add('message', 'ai');
-  aiMessage.textContent = "...";
-  chatDisplay.appendChild(aiMessage);
-
-  try {
-    // The API Fetch Request
-    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        "model": "google/gemini-2.0-flash-exp:free",
-        "messages": [
-          { 
-            "role": "system", 
-            "content": "You are City Hope IntelliSense, a supportive friend for church members in Legazpi. Be warm, insightful, and grounded." 
-          },
-          { "role": "user", "content": messageText }
-        ]
-      })
-    });
-
-    // Handle potential server errors
-    if (!response.ok) {
-      const errorData = await response.json();
-      console.error("API Error Detailed:", errorData);
-      aiMessage.textContent = "I'm having trouble thinking right now. Please check my connection.";
-      return;
-    }
-
-    const data = await response.json();
-    
-    // show the AI's actual response
-    if (data.choices && data.choices[0]) {
-      aiMessage.textContent = data.choices[0].message.content;
-    } else {
-      aiMessage.textContent = "I heard you, but I don't have an answer right now.";
-    }
-
-  } catch (error) {
-    console.error("Connection Error:", error);
-    aiMessage.textContent = "Connection lost. Please try again.";
-  }
-
-  // scroll to show the AI response
-  chatDisplay.scrollTop = chatDisplay.scrollHeight;
+  chatDisplay.scrollTop = chatDisplay.scrollheight;
 };
 
-// EVENT LISTENERS
+// here tell the button to listen for a click
 sendButton.addEventListener('click', sendMessage);
 
 chatInput.addEventListener('keypress', (e) => {

@@ -1,5 +1,5 @@
 // --- CONFIGURATION ---
-const OPENROUTER_API_KEY = import.meta.env.OPENROUTER_API_KEY;
+const OPENROUTER_API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY;
 
 // --- HELPER FUNCTIONS ---
 const scrollToBottom = () => {
@@ -44,7 +44,7 @@ const sendMessage = async () => {
       },
       body: JSON.stringify({
         // Using a stable ID to avoid "No endpoints found" errors
-        "model": "google/gemini-2.0-flash-exp:free", 
+        "model": "tngtech/deepseek-r1t2-chimera:free", 
         "messages": [
           { 
             "role": "system", 
@@ -62,6 +62,10 @@ const sendMessage = async () => {
       aiDiv.textContent = `Error: ${data.error?.message || "Unauthorized"}`;
       return;
     }
+
+    // This removes everything inside {{ }} including the brackets
+    const cleanMessage = data.choices[0].message.content.replace(/\{\{.*?\}\}/gs, "").trim();
+    aiDiv.textContent = cleanMessage;
 
     // 3. Replace "..." with real content and scroll again
     aiDiv.textContent = data.choices[0].message.content;

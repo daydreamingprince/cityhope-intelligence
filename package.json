@@ -1,0 +1,26 @@
+{
+  "name": "cityhope-intelligence",
+  "version": "1.0.0",
+  "description": "A basic AI chatbot I made for our church using HTML and CSS (probably javascript in the future)",
+  "main": "script.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/daydreamingprince/cityhope-intelligence.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/daydreamingprince/cityhope-intelligence/issues"
+  },
+  "homepage": "https://github.com/daydreamingprince/cityhope-intelligence#readme",
+  "devDependencies": {
+    "vite": "^7.3.1"
+  }
+}

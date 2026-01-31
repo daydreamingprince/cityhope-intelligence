@@ -139,3 +139,18 @@ footer {
   text-align: center;
   background-color: #1e1e1e;
 }
+
+.typing {
+  font-style: italic;
+  color: #888;
+}
+
+@keyframes blink {
+  0% { opacity: 0.2; }
+  20% { opacity: 1; }
+  100% { opacity: 0.2; }
+}
+
+.typing span {
+  animation: blink 1.4s infinite both;
+}

@@ -98,12 +98,13 @@ header p {
   flex: 1;
   background-color: #121212;
   border: 1px solid #444;
-  border-radius: 8px;
-  padding: 10px;
+  border-radius: 20px;
+  padding: 12px 15px;
   color: #e0e0e0;
   resize: none; /* this prevents the user from making the box bigger */
   height: 45px;
   font-family: inherit;
+  font-size: 16px; /* this theoretically will stop the iphone autozoom when clicking on the text area */
 }
 
 #input-area button {

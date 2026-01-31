@@ -7,6 +7,13 @@
   box-sizing: border-box;
 }
 
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
 body {
   background-color: #121212;
   color: #e0e0e0;

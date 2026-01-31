@@ -95,7 +95,7 @@ header p {
   padding: 10px;
   color: #e0e0e0;
   resize: none; /* this prevents the user from making the box bigger */
-  height: 40px;
+  height: 45px;
   font-family: inherit;
 }
 

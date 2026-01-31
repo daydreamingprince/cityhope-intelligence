@@ -110,10 +110,25 @@ header p {
   background-color: #0056b3;
   color: white;
   border: none;
-  border-radius: 8px;
-  padding: 0 15px;
-  font-weight: bold;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.2s, background-color 0.2s;
   cursor: pointer;
+}
+
+#input-area button:hover {
+  background-color: #004494;
+  transform: scale(1.05);
+}
+
+#input-area button svg {
+  width: 20px;
+  height: 20px;
+  transform: translateX(-1px) translateY(1px); /* fine tune the icon position */
 }
 
 footer {

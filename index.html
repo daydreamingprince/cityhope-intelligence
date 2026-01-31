@@ -1,47 +1,40 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <link rel="stylesheet" href="styles.css">
   <title>City Hope Intellisense</title>
 </head>
-
 <body>
-<div class="chat-container">
-  <header>
-    <h1>City Hope IntelliSense</h1>
-    <p>Your intelligent friend anywhere you go.</p>
-  </header>
+  <div class="chat-container">
+    <header>
+      <h1>City Hope IntelliSense</h1>
+      <p>Your intelligent friend anywhere you go.</p>
+    </header>
 
-  <main>
-    <div id="chat-display">
-      <div class="message ai">Hello! How are you feeling today?</div>
-      <!-- <div class="message user">I am feeling a bit overwhelmed</div> -->
-    </div>
+    <main>
+      <div id="chat-display">
+        <div class="message ai">Hello! How are you feeling today?</div>
+      </div>
 
-    <section id="input-area">
-      <textarea placeholder="Type a message..."></textarea>
-      <button type="button" aria-label="Send Message">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="22" y1="2" x2="11" y2="13"></line>
-          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-        </svg>
-      </button>
-    </section>
-  </main>
+      <div id="input-area">
+        <textarea id="chat-input" placeholder="Type your message..."></textarea>
+        
+        <button type="button" id="send-button" aria-label="Send message">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
+        </button>
+      </div>
+    </main>
 
-  <footer>
-    <div>
+    <footer>
       City Hope IntelliSense is here to listen, but always reach out to your Tribe leader or the Man of God for pastoral guidance.
-    </div>
-  </footer>
+    </footer>
+  </div>
 
-</div>
-
-<script type="module" src="script.js"></script>
+  <script type="module" src="script.js"></script>
 </body>
-
 </html>

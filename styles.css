@@ -37,3 +37,11 @@ body {
   flex-direction: column;
   gap: 16px;
 }
+
+.message {
+  max-width: 85%;
+  padding: 12px 16px;
+  border-radius: 18px;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}

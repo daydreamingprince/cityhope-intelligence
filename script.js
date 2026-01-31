@@ -7,7 +7,7 @@ const sendMessage = () => {
   const messageText = chatInput.value.trim(); // grab the text and remove the extra spaces
 
   // validation to make sure user does not send empty messages
-  if (message === "") return;
+  if (messageText === "") return;
 
   // now we build the user bubble
   const userMessage = document.createElement('div'); // creates a new <div>
@@ -19,7 +19,7 @@ const sendMessage = () => {
 
   // then we do the cleanup (like clearing input and scrolling to the bottom)
   chatInput.value = "";
-  chatDisplay.scrollTop = chatDisplay.scrollheight;
+  chatDisplay.scrollTop = chatDisplay.scrollHeight;
 };
 
 // here tell the button to listen for a click

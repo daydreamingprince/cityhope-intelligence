@@ -70,13 +70,15 @@ const sendMessage = async () => {
     // 1. Removes {{ reasoning tags }}
     // 2. Removes meta-comments in (parentheses) at the very end of the message
     const cleanContent = rawContent
-      .replace(/\{\{.*?\}\}/gs, "")      // Remove DeepSeek reasoning
-      .replace(/\s*\([^)]*\)\s*$/g, "") // Remove trailing commentary in parens
+      .replace(/\{\{.*?\}\}/gs, "")      // 1. Remove DeepSeek reasoning tags
+      .replace(/\*\*/g, "")              // 2. Remove double asterisks (bold)
+      .replace(/\*/g, "")                // 3. Remove single asterisks (italics)
+      .replace(/\s*\([^)]*\)\s*$/g, "") // 4. Remove trailing meta-comments in parens
       .trim();
 
     aiDiv.classList.remove('typing');
     aiDiv.textContent = cleanContent;
-    scrollToBottom();
+  scrollToBottom();
 
   } catch (error) {
     aiDiv.classList.remove('typing');

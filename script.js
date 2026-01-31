@@ -1,6 +1,6 @@
 // --- CONFIGURATION ---
 // Replace the string below with your NEW key from step 2
-const OPENROUTER_API_KEY = "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";
+const OPENROUTER_API_KEY = "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";
 
 const sendMessage = async () => {
   const chatInput = document.getElementById('chat-input');
@@ -64,5 +64,4 @@ document.getElementById('chat-input').addEventListener('keypress', (e) => {
     e.preventDefault();
     sendMessage();
   }
-  chatDisplay.scrollTop = chatDisplay.scrollHeight;
 });

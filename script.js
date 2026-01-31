@@ -44,7 +44,7 @@ const sendMessage = async () => {
         "X-Title": "City Hope IntelliSense"
       },
       body: JSON.stringify({
-        "model": "google/gemini-2.0-flash-exp:free", 
+        "model": "tngtech/deepseek-r1t2-chimera:free", 
         "messages": [
           { 
             "role": "system", 

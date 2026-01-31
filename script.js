@@ -1,6 +1,6 @@
 // --- CONFIGURATION ---
 // Replace the string below with your NEW key from step 2
-const OPENROUTER_API_KEY = "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";
+const OPENROUTER_API_KEY = "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";
 
 const sendMessage = async () => {
   const chatInput = document.getElementById('chat-input');

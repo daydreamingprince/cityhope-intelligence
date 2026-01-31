@@ -1,5 +1,5 @@
 // --- CONFIGURATION ---
-// In Vite, variables must start with VITE_ to be accessible in the frontend
+// In Vite/Vercel, variables must start with VITE_ to be accessible in the frontend
 const OPENROUTER_API_KEY = import.meta.env.VITE_OPENROUTER_API_KEY;
 
 // --- HELPER FUNCTIONS ---
@@ -27,7 +27,7 @@ const sendMessage = async () => {
   chatInput.value = "";
   scrollToBottom();
   
-  // 2. Add AI "Thinking" Bubble with Animation
+  // 2. Add AI "Thinking" Bubble with Animation (No hardcoded dots)
   const aiDiv = document.createElement('div');
   aiDiv.className = 'message ai typing';
   aiDiv.innerHTML = '<span>.</span><span>.</span><span>.</span>';
@@ -65,8 +65,14 @@ const sendMessage = async () => {
 
     // 3. Clean and Display Content
     const rawContent = data.choices[0].message.content;
-    // This regex removes {{ reasoning tags }} if you switch to a reasoning model
-    const cleanContent = rawContent.replace(/\{\{.*?\}\}/gs, "").trim();
+
+    // Advanced Regex Cleaning:
+    // 1. Removes {{ reasoning tags }}
+    // 2. Removes meta-comments in (parentheses) at the very end of the message
+    const cleanContent = rawContent
+      .replace(/\{\{.*?\}\}/gs, "")      // Remove DeepSeek reasoning
+      .replace(/\s*\([^)]*\)\s*$/g, "") // Remove trailing commentary in parens
+      .trim();
 
     aiDiv.classList.remove('typing');
     aiDiv.textContent = cleanContent;
@@ -87,4 +93,4 @@ document.getElementById('chat-input').addEventListener('keypress', (e) => {
     e.preventDefault();
     sendMessage();
   }
-}); 
+});

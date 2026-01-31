@@ -78,3 +78,12 @@ header p {
   color: #888;
   margin-top: 4px;
 }
+
+#input-area {
+  padding: 15px;
+  background-color: #252525;
+  display: flex;
+  gap: 10px;
+  border-top: 1px solid #333;
+}
+
